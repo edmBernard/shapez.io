@@ -327,7 +327,17 @@ export class HubGoals extends BasicSerializableObject {
         /** @type {Array<import("./shape_definition").ShapeLayer>} */
         let layers = [];
 
-        const randomColor = () => randomChoice(Object.values(enumColors));
+        // Limit the number of different color in the shape to 3
+        // As we draw in the same enum the result can have 1, 2 or 3 color
+        // 1 color ~ 2%
+        // 2 colors ~ 33%
+        // 3 colors ~ 65%
+        let selectedColors = []
+        for (let i = 0; i < 3; ++i) {
+            selectedColors.push(randomChoice(Object.values(enumColors)));
+        }
+
+        const randomColor = () => randomChoice(selectedColors);
         const randomShape = () => randomChoice(Object.values(enumSubShape));
 
         let anyIsMissingTwo = false;
